@@ -50,6 +50,7 @@ export default function TokenDialog({
 }) {
   const [tabSelection, setTabSelection] = useState(0);
   const [tokenFilter, setTokenFilter] = useState("");
+  //将字符串中的所有字母字符转换为小写。
   const filter = tokenFilter.toLowerCase();
   const styles = useStyles();
   const { swappableTokens, swappableTokensSollet, swappableTokensWormhole } =
@@ -61,9 +62,24 @@ export default function TokenDialog({
       : tabSelection === 1
       ? swappableTokensWormhole
       : swappableTokensSollet;
+
   let tokens =
     tokenFilter === ""
       ? selectedTokens
+      //filter()方法返回满足回调函数中指定条件的数组元素
+      //其中tokens是TokenInfo[]类型
+      /* 
+                export interface TokenInfo {
+                    readonly chainId: number;
+                    readonly address: string;
+                    readonly name: string;
+                    readonly decimals: number;
+                    readonly symbol: string;
+                    readonly logoURI?: string;
+                    readonly tags?: string[];
+                    readonly extensions?: TokenExtensions;
+                }
+      */
       : selectedTokens.filter(
           (t) =>
             t.symbol.toLowerCase().startsWith(filter) ||
@@ -86,6 +102,7 @@ export default function TokenDialog({
         <Typography variant="h6" style={{ paddingBottom: "16px" }}>
           Select a token
         </Typography>
+        {/* 搜索token的组件 */}
         <TextField
           className={styles.textField}
           placeholder={"Search name"}
